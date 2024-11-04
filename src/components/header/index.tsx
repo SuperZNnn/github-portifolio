@@ -1,20 +1,31 @@
+import { useState } from "react"
 import { HeaderComponent } from "./style"
 
-const ProfilePage = () => {
+const Header = () => {
+    const [isLogged, setIsLogged] = useState<boolean>(false)
 
     return(
         <HeaderComponent>
             <section className="header_links">
-                <p>Início</p>
-                <p>Minha história</p>
-                <p>Experiências</p>
-                <p>Contato</p>
+                <a>Início</a>
+                <a>Minha história</a>
+                <a>Experiências</a>
+                <a>Contato</a>
             </section>
-            
-            <div className="log_in">
 
-            </div>
+            {!isLogged && (
+                <div className="log_in">
+                    <img src="/assets/images/log_in_button.png" alt="Login"/>
+                    <p>Entrar</p>
+                </div>
+            )}
+            {isLogged && (
+                <div className="log_out">
+                    <p>Sair</p>
+                    <img src="" alt="Profile"/>
+                </div>
+            )}
         </HeaderComponent>
     )
 }
-export default ProfilePage
+export default Header

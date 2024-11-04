@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import ProfilePage from '../components/header'
+import ProfilePage from '../pages/profilePage'
 
 const AppRoutes = () => {
 
