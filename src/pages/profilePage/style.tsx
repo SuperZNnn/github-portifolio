@@ -90,8 +90,48 @@ export const ProfilePageContainer = styled.main`
                     font-family: "Roboto", sans-serif;
                     background-color: var(--dark_green);
                     cursor: pointer;
+                    transition: 0.2s;
+
+                    &:hover{
+                        background-color: var(--primary_color);
+                        border-color: var(--primary_color);
+                    }
                 }
             }
         }
     }
+
+    .history{
+        position: relative;
+        top: 236px;
+        margin-top: 128px;
+        width: 1240px;
+        height: 504px;
+        border-radius: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+        padding: 64px;
+        background-color: var(--card_color);
+
+        h2{
+            font-weight: 800;
+            font-size: 64px;
+            line-height: 40px;
+            color: var(--secondary_text);
+            font-family: "Roboto", sans-serif;
+        }
+        p{
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 34px;
+            color: var(--secondary_text);
+            font-family: "Roboto", sans-serif;
+            margin-top: 64px;
+        }
+    }
+`
+
+export const ExperiencesContainer = styled.section`
+    
 `
