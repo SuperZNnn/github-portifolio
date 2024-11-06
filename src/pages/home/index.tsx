@@ -1,7 +1,10 @@
 import { HomePageContainer } from "./style"
 import { signIn } from "../../hooks/useAuth"
+import { useNavigate } from "react-router-dom"
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
     return (
         <HomePageContainer>
             <h1>Digite o nome do usuário que deseja bucar</h1>
@@ -20,7 +23,13 @@ const HomePage = () => {
                 <div className="line"/>
             </div>
 
-            <div className="github_option" onClick={signIn}>
+            <div className="github_option"
+                onClick={() => {
+                    signIn({callback: (user: string) => {
+                        navigate(`/profile/${user}`)
+                    },
+                });
+            }}>
                 <p className="label">Acesse sua conta com</p>
                 <button>
                     <img src="/assets/images/github_icon.png" alt="GitHub"/>
