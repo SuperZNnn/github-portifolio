@@ -7,6 +7,9 @@ export const HeaderComponent = styled.header`
     border-radius: 0px 0px 35.6px 35.6px;
     display: flex;
     align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
 
     .header_links{
         width: 775px;
