@@ -113,6 +113,7 @@ export const ProfilePageContainer = styled.main`
         box-sizing: border-box;
         padding: 64px;
         background-color: var(--card_color);
+        margin-bottom: 128px;
 
         h2{
             font-weight: 800;
@@ -133,5 +134,34 @@ export const ProfilePageContainer = styled.main`
 `
 
 export const ExperiencesContainer = styled.section`
-    
+    position: relative;
+    top: 236px;
+    padding: 64px 0;
+    background-color: var(--secondary_color);
+    width: 1368px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+
+    h2{
+        font-family: "Montserrat", sans-serif;
+        text-align: center;
+        font-weight: 800;
+        font-size: 64px;
+        line-height: 40px;
+        color: var(--secondary_text);
+    }
+    .experiencies{
+        width: 865px;
+        gap: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 `
