@@ -1,18 +1,57 @@
+import { useEffect, useState } from "react"
 import ExperiencesCard from "../../components/experienciasCard"
 import Header from "../../components/header"
 import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
+import { Link, useParams } from "react-router-dom"
+import axios from "axios"
+
+type gitApiInfo = {
+  imgUrl: string;
+  name: string;
+  link: string;
+  location?: string | null;
+  email?: string | null
+}
 
 const ProfilePage = () => {
+  const { user } = useParams()
+
+  const [gitApiInfo, setGitApiInfo] = useState<gitApiInfo>(
+    {
+      imgUrl: '/assets/images/github_icon.png',
+      name: 'Loading...',
+      link: 'https://github.com/',
+      location: 'Loading...',
+      email: 'Loading...',
+    }
+  )
+
+  useEffect(() => {
+    axios.get(`https://api.github.com/users/${user}`)
+    .then(response => {
+      setGitApiInfo({
+        imgUrl: response.data.avatar_url,
+        name: response.data.name,
+        link: response.data.html_url,
+        location: response.data.location,
+        email: response.data.email,
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }, [])
+
   return (
     <ProfilePageContainer>
       <Header />
       
       <section className="profile_info">
         <div className="perfil">
-          <img src="/assets/images/github_icon.png" alt="profile"/>
-          <h2>Patoxx</h2>
-          <p>Paraíba, SP</p>
-          <p>felipepatoxx@gmail.com</p>
+          <img src={gitApiInfo.imgUrl} alt="profile"/>
+          <h2>{gitApiInfo.name}</h2>
+          <p>{gitApiInfo.location}</p>
+          <p>{gitApiInfo.email}</p>
         </div>
 
         <div className="brand">
@@ -22,7 +61,7 @@ const ProfilePage = () => {
           <p style={{marginTop: '32px'}}>Olá, meu nome é Felipe Pato e sou dev há 24 anos, sou um senior experiente e potente, sempre disposto a evoluir!</p>
 
           <div className="buttons_container" style={{marginTop: '32px'}}>
-            <button>Github</button>
+            <Link to={gitApiInfo.link}><button>Github</button></Link>
             <button>LinkedIn</button>
           </div>
         </div>

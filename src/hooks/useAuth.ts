@@ -2,17 +2,21 @@ import firebase from "firebase/compat/app"
 import { auth, githubProvider } from "../config/firebase"
 import { signInWithPopup } from "firebase/auth"
 
-interface CustomUser extends firebase.User{
+export interface CustomUser extends firebase.User{
     reloadUserInfo: {
         screenName: string
     }
 }
 
-export const signIn = () => {
+type Props = {
+    callback?: (user: string) => void
+}
+
+export const signIn = ({callback}: Props) => {
     signInWithPopup(auth, githubProvider)
     .then((result) => {
         const user = result.user as CustomUser
-        console.log(user.reloadUserInfo.screenName)
+        if (callback) callback(`${user.reloadUserInfo.screenName}`)
     })
     .catch((error) => {
         console.log(error)

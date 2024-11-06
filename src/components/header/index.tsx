@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { HeaderComponent } from "./style"
+import { signIn } from "../../hooks/useAuth"
 
 const Header = () => {
     const [isLogged, setIsLogged] = useState<boolean>(false)
@@ -14,7 +15,13 @@ const Header = () => {
             </section>
 
             {!isLogged && (
-                <div className="log_in">
+                <div className="log_in" onClick={() =>{
+                    signIn({
+                        callback: () => {
+                            setIsLogged(true)
+                        }
+                    })
+                }}>
                     <img src="/assets/images/log_in_button.png" alt="Login"/>
                     <p>Entrar</p>
                 </div>
