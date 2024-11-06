@@ -131,6 +131,86 @@ export const ProfilePageContainer = styled.main`
             margin-top: 64px;
         }
     }
+
+    footer{
+        position: relative;
+        top: 236px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1368px;
+        margin-top: 128px;
+
+        p.disclaimer{
+            width: 1240px;
+            height: 115px;
+            font-family: "Roboto", sans-serif;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 42px;
+            text-align: center;
+            color: var(--dark_green);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .social{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 405px;
+            gap: 7px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+
+            .link{
+                background-color: var(--primary_text);
+                width: 96px;
+                height: 96px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img{
+                    width: 77px;
+                    height: 77px;
+                    transition: .2s;
+                    position: absolute;
+
+                    &:nth-child(2):hover{
+                        opacity: 0
+                    }
+                }
+            }
+        }
+
+        .copyright{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 64px;
+            gap: 84.45px;
+
+            .location{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 12px;
+            }
+            h5{
+                font-family: "Roboto", sans-serif;
+                font-weight: 500;
+                font-size: 25px;
+                line-height: 29.3px;
+                color: var(--dark_green);
+            }
+        }
+    }
 `
 
 export const ExperiencesContainer = styled.section`
@@ -163,5 +243,38 @@ export const ExperiencesContainer = styled.section`
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+    }
+`
+
+export const ContactContainer = styled.section`
+    position: relative;
+    top: 236px;
+    padding: 128px 64px;
+    width: 1368px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark_green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 64px;
+
+    h4{
+        width: 1240px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 800;
+        font-size: 42px;
+        line-height: 40px;
+        text-align: center;
+        color: var(--secondary_text);
+    }
+    h3{
+        font-family: "Roboto", sans-serif;
+        font-weight: 800;
+        font-size: 64px;
+        line-height: 40px;
+        text-align: center;
+        color: var(--secondary_text);
     }
 `

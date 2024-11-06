@@ -1,6 +1,6 @@
 import ExperiencesCard from "../../components/experienciasCard"
 import Header from "../../components/header"
-import { ExperiencesContainer, ProfilePageContainer } from "./style"
+import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
 
 const ProfilePage = () => {
   return (
@@ -39,8 +39,56 @@ const ProfilePage = () => {
         <div className="experiencies">
           <ExperiencesCard/>
           <ExperiencesCard/>
+          <ExperiencesCard/>
         </div>
       </ExperiencesContainer>
+
+      <ContactContainer>
+        <h4>Sinta-se livre para me contatar a qualquer momento!</h4>
+        <h3>felipepatoxx34@gmail.com</h3>
+      </ContactContainer>
+
+      <footer>
+        <p className="disclaimer">Assim que possível, me envie um email para que possamos trabalhar felizes juntos!</p>
+
+        <div className="social">
+          <a href="https://instagram.com">
+            <div className="link">
+              <img alt="Instagram" src="/assets/socialIcons/insta_color.png"></img>
+              <img alt="Instagram" src="/assets/socialIcons/insta_black.png"></img>
+            </div>
+          </a>
+          <a href="https://facebook.com">
+            <div className="link">
+              <img alt="Facebook" src="/assets/socialIcons/face_color.png"></img>
+              <img alt="Facebook" src="/assets/socialIcons/face_black.png"></img>
+            </div>
+          </a>
+          <a href="https://x.com">
+            <div className="link">
+              <img alt="X" src="/assets/socialIcons/x_color.png"></img>
+              <img alt="X" src="/assets/socialIcons/x_black.png"></img>
+            </div>
+          </a>
+          <a href="https://youtube.com">
+            <div className="link">
+              <img alt="Youtube" src="/assets/socialIcons/you_color.png"></img>
+              <img alt="Youtube" src="/assets/socialIcons/you_black.png"></img>
+            </div>
+          </a>
+        </div>
+        
+        <div className="copyright">
+          <div className="location">
+            <img alt="Localidade" src="/assets/images/location.png"/>
+            <h5>Brasil</h5>
+          </div>
+          
+          <h5>© 2023 Felipe Pato. Todos os direitos reservados.</h5>
+        </div>
+      </footer>
+
+      
     </ProfilePageContainer>
   )
 }

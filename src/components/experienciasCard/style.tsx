@@ -93,5 +93,10 @@ export const CardContainer = styled.section`
         line-height: 34px;
         color: var(--secondary_text);
         text-align: center;
+
+        transition: 0.2s;
+        &:hover{
+            background-color: var(--primary_color);
+        }
     }
 `
