@@ -1,4 +1,5 @@
 import { HomePageContainer } from "./style"
+import { signIn } from "../../hooks/useAuth"
 
 const HomePage = () => {
     return (
@@ -19,7 +20,7 @@ const HomePage = () => {
                 <div className="line"/>
             </div>
 
-            <div className="github_option">
+            <div className="github_option" onClick={signIn}>
                 <p className="label">Acesse sua conta com</p>
                 <button>
                     <img src="/assets/images/github_icon.png" alt="GitHub"/>
