@@ -27,10 +27,10 @@ const Header = () => {
     return(
         <HeaderComponent>
             <section className="header_links">
-                <a>Início</a>
-                <a>Minha história</a>
-                <a>Experiências</a>
-                <a>Contato</a>
+                <a href="#info">Início</a>
+                <a href="#history">Minha história</a>
+                <a href="#experiences">Experiências</a>
+                <a href="#contact">Contato</a>
             </section>
 
             {!isLogged && (
