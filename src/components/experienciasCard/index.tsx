@@ -1,23 +1,33 @@
 import { CardContainer } from "./style"
 
-const ExperiencesCard = () => {
+type Props = {
+    title: string,
+    during: string,
+    technologies: string[],
+    description: string,
+    repoLink?: string
+}
+
+const ExperiencesCard = ({title, during, technologies, description, repoLink}: Props) => {
 
     return (
         <CardContainer>
             <div className="content">
-                <h3>Dev Junior da NASA</h3>
-                <p className="during">Junho - 2002 - 2020</p>
+                <h3>{title}</h3>
+                <p className="during">{during}</p>
 
                 <div className="technologies">
-                    <p>Figma</p>
-                    <p>React</p>
-                    <p>Typescript</p>
+                    {technologies.map((tech, index) => (
+                        <p key={index}>{tech}</p>
+                    ))}
                 </div>
 
-                <p className="descrip">Um projetão fellas da minha cidade que é muito fellas, um projeto tão fellas que não deixa de ser fellas, um projetinho fellas feito pra ser fellas, agora continuarei escrevendo pra ocupar espaço e ocupar mais espaço e ocupar mais espaço</p>
+                <p className="descrip">{description}</p>
             </div>
             
-            <button>Ver repositório</button>
+            {repoLink && (
+                <a href={repoLink}><button>Ver repositório</button></a>
+            )}
         </CardContainer>
     )
 }

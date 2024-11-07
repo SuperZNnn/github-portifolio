@@ -76,9 +76,23 @@ const ProfilePage = () => {
         <h2>Experiências</h2>
 
         <div className="experiencies">
-          <ExperiencesCard/>
-          <ExperiencesCard/>
-          <ExperiencesCard/>
+          <ExperiencesCard
+          title="Dev Junior na NASA"
+          during="Junho - 2002 - 2020"
+          technologies={["Figma", "React", "Typescript"]}
+          description="Trabalhei com figma na nasa construindo designs de foguetes usando figma pro Elon Musk"/>
+          <ExperiencesCard
+          title="Projeto de caridade na minha cidade"
+          during="2 semanas"
+          technologies={["Javascript", "Angular"]}
+          description="Trabalhei em um projeto na cidade que envolvia Reacr e Scrum para ajudar idosos na minha cidade e seus problemas de movimentação pela cidade."
+          repoLink="https://www.google.com"/>
+          <ExperiencesCard
+          title="Projetão Fellas"
+          during="2 meses"
+          technologies={["Figma", "React", "Typescript"]}
+          description="Um projetão fellas da minha cidade que é muito fellas, um projeto tão fellas que não deixa de ser fellas, um projetinho fellas feito pra ser fellas, agora continuarei escrevendo pra ocupar espaço e ocupar mais espaço e ocupar mais espaço."
+          repoLink="https://www.google.com"/>
         </div>
       </ExperiencesContainer>
 
