@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { HeaderComponent } from "./style"
 import { signIn } from "../../hooks/useAuth"
-import { clearSession, getSession } from "../../hooks/useSession"
+import { clearSession, getSession, setSession } from "../../hooks/useSession"
 import axios from "axios"
 
 const Header = () => {
@@ -12,17 +12,23 @@ const Header = () => {
 
     const verifySession = () => {
         if (session.login){
-            setIsLogged(true)
+            
             axios.get(`https://api.github.com/users/${session.login}`)
             .then(response=>{
                 setImgSrc(response.data.avatar_url)
+                setIsLogged(true)
+            })
+            .catch(error => {
+                console.log(error)
             })
         }
         else{
             setIsLogged(false)
         }
     }
-    useEffect(verifySession,[])
+    useEffect(() => {
+        verifySession()
+    },[])
 
     return(
         <HeaderComponent>
@@ -36,8 +42,10 @@ const Header = () => {
             {!isLogged && (
                 <div className="log_in" onClick={() =>{
                     signIn({
-                        callback: () => {
-                            setIsLogged(true)
+                        callback: (user: string) => {
+                            console.log(user)
+                            setSession(user)
+                            verifySession()
                         }
                     })
                 }}>

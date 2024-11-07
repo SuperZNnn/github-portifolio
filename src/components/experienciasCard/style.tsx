@@ -94,6 +94,8 @@ export const CardContainer = styled.section`
         color: var(--secondary_text);
         text-align: center;
 
+        transform: translate(-6px);
+
         transition: 0.2s;
         &:hover{
             background-color: var(--primary_color);

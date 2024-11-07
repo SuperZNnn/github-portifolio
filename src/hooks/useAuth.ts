@@ -17,7 +17,6 @@ export const signIn = ({callback}: Props) => {
     signInWithPopup(auth, githubProvider)
     .then((result) => {
         const user = result.user as CustomUser
-        setSession(user.reloadUserInfo.screenName)
         
         if (callback) callback(`${user.reloadUserInfo.screenName}`)
     })
