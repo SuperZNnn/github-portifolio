@@ -70,8 +70,20 @@ export const ProfilePageContainer = styled.main`
                 color: var(--primary_text);
                 font-family: "Roboto", sans-serif;
 
-                span{
+                span, input{
+                    margin-left: 5px;
                     color: var(--primary_color);
+                    font-size: 60px
+                }
+                input{
+                    width: 80%;
+                    border: none;
+                    border-bottom: 3px solid var(--primary_text);
+                    font-weight: 750;
+                    height: 50px;
+                    &:focus{
+                        outline: none;
+                    }
                 }
             }
 
@@ -141,7 +153,6 @@ export const ProfilePageContainer = styled.main`
         top: 236px;
         margin-top: 128px;
         width: 1240px;
-        height: 504px;
         border-radius: 20px;
         left: 50%;
         transform: translateX(-50%);
@@ -157,13 +168,21 @@ export const ProfilePageContainer = styled.main`
             color: var(--secondary_text);
             font-family: "Roboto", sans-serif;
         }
-        p{
+        p,textarea{
             font-weight: 700;
             font-size: 24px;
             line-height: 34px;
             color: var(--secondary_text);
             font-family: "Roboto", sans-serif;
             margin-top: 64px;
+        }
+
+        textarea{
+            background-color: transparent;
+            outline: none;
+            border: none;
+            width: 100%;
+            resize: none;
         }
     }
 
@@ -216,6 +235,28 @@ export const ProfilePageContainer = styled.main`
 
                     &:nth-child(2):hover{
                         opacity: 0
+                    }
+                }
+                .edit{
+                    width: 25px;
+                    height: 25px;
+                    position: absolute;
+                    background-color: var(--card_color);
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transform: translate(38px,-30px);
+                    cursor: pointer;
+                    transition: 0.2s;
+
+                    &:hover{
+                        box-shadow: 2px 2px 0px rgba(0,0,0,.5);
+                    }
+
+                    img{
+                        width: 11.43px;
+                        height: 11.43px;
                     }
                 }
             }
@@ -304,12 +345,19 @@ export const ContactContainer = styled.section`
         text-align: center;
         color: var(--secondary_text);
     }
-    h3{
+    h3,input{
         font-family: "Roboto", sans-serif;
         font-weight: 800;
         font-size: 64px;
         line-height: 40px;
         text-align: center;
         color: var(--secondary_text);
+    }
+    input{
+        width: 900px;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        border-bottom: 3px solid var(--tertiary_text);
     }
 `

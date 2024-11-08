@@ -7,6 +7,7 @@ export type User = {
     linkedinLink?: string,
     youLink?: string,
     history?: string,
+    extraEmail?: string
     experiences?: [
         {
             title: string,
@@ -24,18 +25,50 @@ export const getLocalStorageData = (user: string) => {
     return { usersArray, userIndex };
 }
 
-export const changeLinkedinLink = (user: string, link: string) => {
+type UserUpdateField = 'linkedinLink' | 'instaLink' | 'youLink' | 'xLink' | 'faceLink' | 'displayName' | 'history' | 'extraEmail';
+
+const updateUserField = (user: string, field: UserUpdateField, value: string) => {
     const { usersArray, userIndex } = getLocalStorageData(user);
     
     if (userIndex !== -1) {
-        usersArray[userIndex].linkedinLink = link;
-    }
-    else {
-        const newUser: User = {
-            name: user,
-            linkedinLink: link
-        };
+        usersArray[userIndex][field] = value;
+    } else {
+        const newUser: User = { name: user, [field]: value };
         usersArray.push(newUser);
     }
+
     localStorage.setItem('users', JSON.stringify(usersArray));
 }
+
+// Funções específicas
+export const changeLinkedinLink = (user: string, link: string) => {
+    updateUserField(user, 'linkedinLink', link);
+};
+
+export const changeInstagramLink = (user: string, link: string) => {
+    updateUserField(user, 'instaLink', link);
+};
+
+export const changeFacebookLink = (user: string, link: string) => {
+    updateUserField(user, 'faceLink', link);
+};
+
+export const changeXLink = (user: string, link: string) => {
+    updateUserField(user, 'xLink', link);
+};
+
+export const changeYoutubeLink = (user: string, link: string) => {
+    updateUserField(user, 'youLink', link);
+};
+
+export const changeDisplayName = (user: string, name: string) => {
+    updateUserField(user, 'displayName', name);
+};
+
+export const changeHistory = (user: string, history: string) => {
+    updateUserField(user, 'history', history);
+};
+
+export const changeExtraEmail = (user: string, email: string) => {
+    updateUserField(user, 'extraEmail', email);
+};

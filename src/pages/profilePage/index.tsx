@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ExperiencesCard from "../../components/experienciasCard"
 import Header from "../../components/header"
 import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { LinkForm } from "../../components/form"
-import { changeLinkedinLink, getLocalStorageData, User } from "../../hooks/storeUsersData"
+import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, getLocalStorageData, User } from "../../hooks/storeUsersData"
 
 type gitApiInfo = {
   imgUrl: string;
   name: string;
   link: string;
   location?: string | null;
-  email?: string | null
+  email?: string | null;
+  bio?: string | null;
 }
 
 type Props = {
@@ -34,11 +35,16 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
       link: 'https://github.com/',
       location: 'Loading...',
       email: 'Loading...',
+      bio: ''
     }
   )
   const [userInfo, setUserInfo] = useState<User>({
     name: user || ''
   })
+
+  const inputTitle = useRef<HTMLInputElement>(null)
+  const historyTextArea = useRef<HTMLTextAreaElement>(null)
+  const extraEmail = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     // Pegar dados do localStorage
@@ -60,6 +66,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         link: response.data.html_url,
         location: response.data.location,
         email: response.data.email,
+        bio: response.data.bio
       })
     })
     .catch(error => {
@@ -76,6 +83,26 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
     setSocialLink('linkedin')
     setLinkFormState(true)
   }
+  const changeInstagram = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setSocialLink('instagram')
+    setLinkFormState(true)
+  }
+  const changeFacebook = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setSocialLink('facebook')
+    setLinkFormState(true)
+  }
+  const changeX = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setSocialLink('x')
+    setLinkFormState(true)
+  }
+  const changeYou = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setSocialLink('youtube')
+    setLinkFormState(true)
+  }
   
   const handleCallback = (link: string) => {
     if (socialLink === 'linkedin'){
@@ -85,7 +112,47 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         linkedinLink: link
       }));
     }
+    if (socialLink === 'instagram'){
+      changeInstagramLink(user || '', link)
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        instaLink: link
+      }));
+    }
+    if (socialLink === 'facebook'){
+      changeFacebookLink(user || '', link)
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        faceLink: link
+      }));
+    }
+    if (socialLink === 'x'){
+      changeXLink(user || '', link)
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        xLink: link
+      }));
+    }
+    if (socialLink === 'youtube'){
+      changeYoutubeLink(user || '', link)
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        youLink: link
+      }));
+    }
   }
+
+  useEffect(() => {
+    if (editMode && inputTitle.current){
+      inputTitle.current.value = userInfo.displayName ? userInfo.displayName : gitApiInfo.name
+    }
+    if (editMode && historyTextArea.current){
+      historyTextArea.current.value = userInfo.history ? userInfo.history : 'Adicione sua história'
+    }
+    if (editMode && extraEmail.current){
+      extraEmail.current.value = userInfo.extraEmail ? userInfo.extraEmail : ''
+    }
+  },[editMode])
 
   return (
     <ProfilePageContainer>
@@ -108,13 +175,28 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
 
         <div className="brand">
           <h1>Hello,</h1>
-          <h1 style={{marginTop: '29px'}}>I'm <span>Felipe Pato</span></h1>
+          <h1 style={{marginTop: '29px'}}>I'm 
+            {!editMode && (
+              <span>{userInfo.displayName ? userInfo.displayName : gitApiInfo.name}</span>
+            )}
+            {editMode && (
+              <input ref={inputTitle}
+              onChange={() => {
+                setUserInfo((prevUserInfo) => ({
+                  ...prevUserInfo,
+                  displayName: inputTitle.current?.value || ''
+                }));
+                changeDisplayName(user || '', inputTitle.current?.value || '')
+              }}
+              />
+            )}
+          </h1>
 
-          <p style={{marginTop: '32px'}}>Olá, meu nome é Felipe Pato e sou dev há 24 anos, sou um senior experiente e potente, sempre disposto a evoluir!</p>
+          <p style={{marginTop: '32px'}}>{gitApiInfo.bio}</p>
 
           <div className="buttons_container" style={{marginTop: '32px'}}>
             <a href={gitApiInfo.link}><button>Github</button></a>
-            <a href={userInfo.linkedinLink ? userInfo.linkedinLink : '//www.linkedin.com'}>
+            <a href={userInfo.linkedinLink ? userInfo.linkedinLink : 'https://www.linkedin.com'}>
               <button>
                 LinkedIn
 
@@ -131,7 +213,20 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
 
       <section className="history" id="history">
         <h2>Minha história</h2>
-        <p>Olá, eu sou Felipe Pato e comecei minha carreira trabalhando em um pequeno escritório na California para meu chefe Elon Musk, fui demitido 2 dias depois por commitar errado e apagar o repositório da empresa. Voltei então a trabalhar de casa criando sites de Yoga para idosos, ganhando muito dinheiro no processo, esses sites eram desenvolvidos usando Fortro e Cobol, ao qual aprendi com meu tio Jhon. No entanto, essa forma de fazer sites não durou muito com o advento das IAs, foi então que decidi estudar muito e acabei passando no processo seletivo da cicada 3301, me tornando assim um grande dev da minha area, hoje trabalho espionando hackers e destruindo governos, eu sou Felipe Pato!</p>
+        {!editMode && (
+          <p>{userInfo.history ? userInfo.history : 'Não há nenhuma história pra contar!'}</p>
+        )}
+        {editMode && (
+          <textarea ref={historyTextArea}
+          onChange={() => {
+            setUserInfo((prevUserInfo) => ({
+              ...prevUserInfo,
+              history: historyTextArea.current?.value || ''
+            }));
+            changeHistory(user || '', historyTextArea.current?.value || '')
+          }}
+          />
+        )}
       </section>
 
       <ExperiencesContainer id="experiences">
@@ -158,39 +253,87 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         </div>
       </ExperiencesContainer>
 
-      <ContactContainer id="contact">
-        <h4>Sinta-se livre para me contatar a qualquer momento!</h4>
-        <h3>felipepatoxx34@gmail.com</h3>
-      </ContactContainer>
+      {userInfo.extraEmail || editMode ? (
+        <ContactContainer id="contact">
+          <h4>Sinta-se livre para me contatar a qualquer momento!</h4>
+          {editMode ? (
+            <input
+            ref={extraEmail}
+            placeholder="Adicione um email adicional"
+            onChange={() => {
+              changeExtraEmail(user || '', extraEmail.current?.value || '')
+              setUserInfo((prevUserInfo) => ({
+                ...prevUserInfo,
+                extraEmail: extraEmail.current?.value || ''
+              }));
+            }}
+            />
+          ):(
+            <h4>{userInfo.extraEmail}</h4>
+          )}
+        </ContactContainer>
+      ): undefined}
 
       <footer>
         <p className="disclaimer">Assim que possível, me envie um email para que possamos trabalhar felizes juntos!</p>
 
         <div className="social">
-          <a href="https://instagram.com">
-            <div className="link">
-              <img alt="Instagram" src="/assets/socialIcons/insta_color.png"></img>
-              <img alt="Instagram" src="/assets/socialIcons/insta_black.png"></img>
-            </div>
-          </a>
-          <a href="https://facebook.com">
-            <div className="link">
-              <img alt="Facebook" src="/assets/socialIcons/face_color.png"></img>
-              <img alt="Facebook" src="/assets/socialIcons/face_black.png"></img>
-            </div>
-          </a>
-          <a href="https://x.com">
-            <div className="link">
-              <img alt="X" src="/assets/socialIcons/x_color.png"></img>
-              <img alt="X" src="/assets/socialIcons/x_black.png"></img>
-            </div>
-          </a>
-          <a href="https://youtube.com">
-            <div className="link">
-              <img alt="Youtube" src="/assets/socialIcons/you_color.png"></img>
-              <img alt="Youtube" src="/assets/socialIcons/you_black.png"></img>
-            </div>
-          </a>
+          {userInfo.instaLink || editMode ? (
+            <a target="blank" href={userInfo.instaLink ? `https://${userInfo.instaLink}` : 'https://instagram.com'}>
+              <div className="link">
+                <img alt="Instagram" src="/assets/socialIcons/insta_color.png"></img>
+                <img alt="Instagram" src="/assets/socialIcons/insta_black.png"></img>
+
+                {editMode ? (
+                  <div className="edit" onClick={changeInstagram}>
+                    <img src="/assets/images/edit_icon.png"/>
+                  </div>
+                ): undefined}
+              </div>
+            </a>
+          ): undefined}
+          {userInfo.faceLink || editMode ? (
+            <a target="blank" href={userInfo.faceLink ? `https://${userInfo.faceLink}` : 'https://facebook.com'}>
+              <div className="link">
+                <img alt="Facebook" src="/assets/socialIcons/face_color.png"></img>
+                <img alt="Facebook" src="/assets/socialIcons/face_black.png"></img>
+
+                {editMode ? (
+                  <div className="edit" onClick={changeFacebook}>
+                    <img src="/assets/images/edit_icon.png"/>
+                  </div>
+                ): undefined}
+              </div>
+            </a>
+          ): undefined}
+          {userInfo.xLink || editMode ? (
+            <a target="blank" href={userInfo.xLink ? `https://${userInfo.xLink}` : 'https://x.com'}>
+              <div className="link">
+                <img alt="X" src="/assets/socialIcons/x_color.png"></img>
+                <img alt="X" src="/assets/socialIcons/x_black.png"></img>
+
+                {editMode ? (
+                  <div className="edit" onClick={changeX}>
+                    <img src="/assets/images/edit_icon.png"/>
+                  </div>
+                ): undefined}
+              </div>
+            </a>
+          ): undefined}
+          {userInfo.youLink || editMode ? (
+            <a target="blank" href={userInfo.youLink ? `https://${userInfo.youLink}` : 'https://youtube.com'}>
+              <div className="link">
+                <img alt="Youtube" src="/assets/socialIcons/you_color.png"></img>
+                <img alt="Youtube" src="/assets/socialIcons/you_black.png"></img>
+
+                {editMode ? (
+                  <div className="edit" onClick={changeYou}>
+                    <img src="/assets/images/edit_icon.png"/>
+                  </div>
+                ): undefined}
+              </div>
+            </a>
+          ) : undefined}
         </div>
         
         <div className="copyright">
@@ -199,7 +342,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
             <h5>Brasil</h5>
           </div>
           
-          <h5>© 2023 Felipe Pato. Todos os direitos reservados.</h5>
+          <h5>© 2024 {gitApiInfo.name}. Todos os direitos reservados.</h5>
         </div>
       </footer>
 
