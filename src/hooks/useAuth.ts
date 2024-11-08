@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app"
 import { auth, githubProvider } from "../config/firebase"
 import { signInWithPopup } from "firebase/auth"
-import { setSession } from "./useSession"
 
 export interface CustomUser extends firebase.User{
     reloadUserInfo: {

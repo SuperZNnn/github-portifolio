@@ -1,6 +1,7 @@
 import { HomePageContainer } from "./style"
 import { signIn } from "../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
+import { setSession } from "../../hooks/useSession";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ const HomePage = () => {
             <div className="github_option"
                 onClick={() => {
                     signIn({callback: (user: string) => {
+                        setSession(user)
                         navigate(`/profile/${user}`)
                     },
                 });

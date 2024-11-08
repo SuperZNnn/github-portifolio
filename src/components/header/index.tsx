@@ -4,19 +4,27 @@ import { signIn } from "../../hooks/useAuth"
 import { clearSession, getSession, setSession } from "../../hooks/useSession"
 import axios from "axios"
 
-const Header = () => {
-    const session = getSession()
+type Props = {
+    updateUser: () => void
+}
 
+const Header = ({updateUser}: Props) => {
     const [isLogged, setIsLogged] = useState<boolean>(false)
     const [imgSrc, setImgSrc] = useState<string>('')
 
     const verifySession = () => {
+        const session = getSession()
+
+        console.log(session)
         if (session.login){
-            
-            axios.get(`https://api.github.com/users/${session.login}`)
+            axios.get(`https://api.github.com/users/${session.login}`,{
+                headers: {
+                    Authorization: 'Bearer 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'
+                }
+                })
             .then(response=>{
-                setImgSrc(response.data.avatar_url)
                 setIsLogged(true)
+                setImgSrc(response.data.avatar_url)
             })
             .catch(error => {
                 console.log(error)
@@ -43,9 +51,11 @@ const Header = () => {
                 <div className="log_in" onClick={() =>{
                     signIn({
                         callback: (user: string) => {
-                            console.log(user)
                             setSession(user)
-                            verifySession()
+                            setTimeout(() => {
+                                verifySession()
+                            }, 200);
+                            updateUser()
                         }
                     })
                 }}>
@@ -57,6 +67,7 @@ const Header = () => {
                 <div className="log_out" onClick={() => {
                     clearSession()
                     setIsLogged(false)
+                    updateUser()
                 }}>
                     <p>Sair</p>
                     <img src={imgSrc} alt="Profile"/>

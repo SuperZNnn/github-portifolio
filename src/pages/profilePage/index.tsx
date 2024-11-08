@@ -13,8 +13,14 @@ type gitApiInfo = {
   email?: string | null
 }
 
-const ProfilePage = () => {
+type Props = {
+  userLogged?: string | null
+  updateUser: () => void
+}
+
+const ProfilePage = ({userLogged, updateUser}: Props) => {
   const { user } = useParams()
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const [gitApiInfo, setGitApiInfo] = useState<gitApiInfo>(
     {
@@ -27,7 +33,11 @@ const ProfilePage = () => {
   )
 
   useEffect(() => {
-    axios.get(`https://api.github.com/users/${user}`)
+    axios.get(`https://api.github.com/users/${user}`,{
+      headers: {
+        Authorization: 'Bearer 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'
+      }
+    })
     .then(response => {
       setGitApiInfo({
         imgUrl: response.data.avatar_url,
@@ -42,12 +52,27 @@ const ProfilePage = () => {
     })
   }, [])
 
+  useEffect(() => {
+    setEditMode(false)
+  },[userLogged])
+
+  const handleEditClick = () => {
+
+  }
+
   return (
     <ProfilePageContainer>
-      <Header />
+      <Header updateUser={updateUser}/>
+
+      {userLogged === user && (
+        <button className="edit" onClick={() => {handleEditClick();setEditMode(!editMode)}}>
+          <img src={`${editMode ? '/assets/images/check.png':'/assets/images/edit_icon.png'}`}/>
+        </button>
+      )}
       
       <section className="profile_info" id="info">
         <div className="perfil">
+
           <img src={gitApiInfo.imgUrl} alt="profile"/>
           <h2>{gitApiInfo.name}</h2>
           <p>{gitApiInfo.location}</p>

@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 export const ProfilePageContainer = styled.main`
+    button.edit{
+        width: 105px;
+        height: 105px;
+        background-color: var(--card_color);
+        border: none;
+        border-radius: 50%;
+        position: absolute;
+        top: 160px;
+        cursor: pointer;
+        left: 85%;
+    }
+
     .profile_info{
         display: flex;
         justify-content: space-between;
