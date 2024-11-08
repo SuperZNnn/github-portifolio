@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import ExperiencesCard from "../../components/experienciasCard"
 import Header from "../../components/header"
 import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import axios from "axios"
 import { LinkForm } from "../../components/form"
+import { changeLinkedinLink, getLocalStorageData, User } from "../../hooks/storeUsersData"
 
 type gitApiInfo = {
   imgUrl: string;
@@ -35,8 +36,18 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
       email: 'Loading...',
     }
   )
+  const [userInfo, setUserInfo] = useState<User>({
+    name: user || ''
+  })
 
   useEffect(() => {
+    // Pegar dados do localStorage
+    const { usersArray, userIndex } = getLocalStorageData(user || '');
+    if (userIndex !== -1) {
+      setUserInfo(usersArray[userIndex]);
+    }
+
+    // Pegar dados da API
     axios.get(`https://api.github.com/users/${user}`,{
       headers: {
         Authorization: 'Bearer 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'
@@ -60,16 +71,19 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
     setEditMode(false)
   },[userLogged])
 
-  const handleEditClick = () => {
-
-  }
-  const changeLinkedin = () => {
-    setLinkFormState(true)
+  const changeLinkedin = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
     setSocialLink('linkedin')
+    setLinkFormState(true)
   }
+  
   const handleCallback = (link: string) => {
     if (socialLink === 'linkedin'){
-      console.log(`Url do Linkedin: ${link}`)
+      changeLinkedinLink(user || '', link)
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        linkedinLink: link
+      }));
     }
   }
 
@@ -78,7 +92,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
       <Header updateUser={updateUser}/>
 
       {userLogged === user && (
-        <button className="edit" onClick={() => {handleEditClick();setEditMode(!editMode)}}>
+        <button className="edit" onClick={() => {setEditMode(!editMode)}}>
           <img src={`${editMode ? '/assets/images/check.png':'/assets/images/edit_icon.png'}`}/>
         </button>
       )}
@@ -99,16 +113,18 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
           <p style={{marginTop: '32px'}}>Olá, meu nome é Felipe Pato e sou dev há 24 anos, sou um senior experiente e potente, sempre disposto a evoluir!</p>
 
           <div className="buttons_container" style={{marginTop: '32px'}}>
-            <Link to={gitApiInfo.link}><button>Github</button></Link>
-            <button>
-              LinkedIn
+            <a href={gitApiInfo.link}><button>Github</button></a>
+            <a href={userInfo.linkedinLink ? userInfo.linkedinLink : '//www.linkedin.com'}>
+              <button>
+                LinkedIn
 
-              {editMode && (
-                <div className="edit" onClick={changeLinkedin}>
-                  <img src="/assets/images/edit_icon.png"/>
-                </div>
-              )}
-            </button>
+                {editMode && (
+                  <div className="edit" onClick={changeLinkedin}>
+                    <img src="/assets/images/edit_icon.png"/>
+                  </div>
+                )}
+              </button>
+            </a>
           </div>
         </div>
       </section>  
