@@ -108,6 +108,29 @@ export const ProfilePageContainer = styled.main`
                         background-color: var(--primary_color);
                         border-color: var(--primary_color);
                     }
+
+                    .edit{
+                        width: 25px;
+                        height: 25px;
+                        position: absolute;
+                        background-color: var(--card_color);
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        transform: translate(148px,-50px);
+                        cursor: pointer;
+                        transition: 0.2s;
+
+                        &:hover{
+                            box-shadow: 2px 2px 0px rgba(0,0,0,.5);
+                        }
+
+                        img{
+                            width: 11.43px;
+                            height: 11.43px;
+                        }
+                    }
                 }
             }
         }

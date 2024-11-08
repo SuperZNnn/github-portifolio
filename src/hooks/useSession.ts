@@ -5,8 +5,6 @@ export const setSession = (userLogin: string) => {
         login: userLogin,
     }
     localStorage.setItem('gitPortSession', JSON.stringify(user))
-    
-    console.log(JSON.parse(localStorage.getItem('gitPortSession') || '{}'))
 }
 export const getSession = () => {
     const session = JSON.parse(localStorage.getItem('gitPortSession') || '{}')

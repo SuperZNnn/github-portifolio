@@ -15,7 +15,6 @@ const Header = ({updateUser}: Props) => {
     const verifySession = () => {
         const session = getSession()
 
-        console.log(session)
         if (session.login){
             axios.get(`https://api.github.com/users/${session.login}`,{
                 headers: {

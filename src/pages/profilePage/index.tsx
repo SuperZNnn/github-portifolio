@@ -4,6 +4,7 @@ import Header from "../../components/header"
 import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
 import { Link, useParams } from "react-router-dom"
 import axios from "axios"
+import { LinkForm } from "../../components/form"
 
 type gitApiInfo = {
   imgUrl: string;
@@ -21,6 +22,9 @@ type Props = {
 const ProfilePage = ({userLogged, updateUser}: Props) => {
   const { user } = useParams()
   const [editMode, setEditMode] = useState<boolean>(false)
+
+  const [linkFormState, setLinkFormState] = useState<boolean>(false)
+  const [socialLink, setSocialLink] = useState<string>('')
 
   const [gitApiInfo, setGitApiInfo] = useState<gitApiInfo>(
     {
@@ -59,6 +63,15 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
   const handleEditClick = () => {
 
   }
+  const changeLinkedin = () => {
+    setLinkFormState(true)
+    setSocialLink('linkedin')
+  }
+  const handleCallback = (link: string) => {
+    if (socialLink === 'linkedin'){
+      console.log(`Url do Linkedin: ${link}`)
+    }
+  }
 
   return (
     <ProfilePageContainer>
@@ -87,7 +100,15 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
 
           <div className="buttons_container" style={{marginTop: '32px'}}>
             <Link to={gitApiInfo.link}><button>Github</button></Link>
-            <button>LinkedIn</button>
+            <button>
+              LinkedIn
+
+              {editMode && (
+                <div className="edit" onClick={changeLinkedin}>
+                  <img src="/assets/images/edit_icon.png"/>
+                </div>
+              )}
+            </button>
           </div>
         </div>
       </section>  
@@ -166,7 +187,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         </div>
       </footer>
 
-      
+      {linkFormState && <LinkForm action={(link: string) => {handleCallback(link)}} close={() => {setLinkFormState(false)}}/>}
     </ProfilePageContainer>
   )
 }
