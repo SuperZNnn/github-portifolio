@@ -10,7 +10,8 @@ export const ProfilePageContainer = styled.main`
         position: absolute;
         top: 160px;
         cursor: pointer;
-        left: 1650px;
+        left: 50%;
+        transform: translateX(500px);
     }
 
     .profile_info{

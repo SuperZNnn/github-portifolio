@@ -13,10 +13,10 @@ export type User = {
             title: string,
             during: string,
             technologies: string[],
-            description: string,
+            descrip: string,
             repoLink?: string
         }
-    ]
+    ] | null
 }
 export const getLocalStorageData = (user: string) => {
     const usersArray = JSON.parse(localStorage.getItem('users') || '[]');
@@ -40,7 +40,6 @@ const updateUserField = (user: string, field: UserUpdateField, value: string) =>
     localStorage.setItem('users', JSON.stringify(usersArray));
 }
 
-// Funções específicas
 export const changeLinkedinLink = (user: string, link: string) => {
     updateUserField(user, 'linkedinLink', link);
 };
@@ -71,4 +70,19 @@ export const changeHistory = (user: string, history: string) => {
 
 export const changeExtraEmail = (user: string, email: string) => {
     updateUserField(user, 'extraEmail', email);
+};
+
+export const createExperience = (user: string, experience: string) => {
+    const { usersArray, userIndex } = getLocalStorageData(user);
+
+    if (userIndex > -1){
+        const newExperience = JSON.parse(experience)
+
+        usersArray[userIndex].experiences = [
+            ...(usersArray[userIndex].experiences || []),
+            newExperience
+        ];
+    }
+    
+    localStorage.setItem('users', JSON.stringify(usersArray));
 };

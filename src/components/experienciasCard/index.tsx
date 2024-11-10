@@ -6,12 +6,13 @@ type Props = {
     technologies: string[],
     description: string,
     repoLink?: string,
-    editMode: boolean
+    editMode: boolean,
+    setCardFormState: () => void
 }
 
-export const NewExperienceCard = () => {
+export const NewExperienceCard = ({setCardFormState}: {setCardFormState: ()=>void}) => {
     return (
-        <CardContainer style={{cursor: 'pointer'}}>
+        <CardContainer style={{cursor: 'pointer'}} onClick={setCardFormState}>
             <div className="middle">
                 <img src="/assets/images/plus.png" alt="Mais"/>
                 <h3>Adicionar Card</h3>
@@ -20,10 +21,10 @@ export const NewExperienceCard = () => {
     )
 }
 
-const OptionsCard = () => {
+const OptionsCard = ({setState}: {setState: () => void}) => {
     return (
         <OptionsCardContainer>
-            <div className="option">
+            <div className="option" onClick={setState}>
                 <img src="/assets/images/edit.png" alt="Editar"/>
             </div>
             <div className="option">
@@ -33,7 +34,7 @@ const OptionsCard = () => {
     )
 }
 
-const ExperiencesCard = ({title, during, technologies, description, repoLink, editMode}: Props) => {
+const ExperiencesCard = ({title, during, technologies, description, repoLink, editMode, setCardFormState}: Props) => {
     return (
         <CardContainer>
             <div className="content">
@@ -50,7 +51,7 @@ const ExperiencesCard = ({title, during, technologies, description, repoLink, ed
             </div>
             
             {editMode && (
-                <OptionsCard/>
+                <OptionsCard setState={() => setCardFormState()}/>
             )}
 
             {repoLink && (

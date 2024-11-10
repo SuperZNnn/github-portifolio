@@ -5,7 +5,7 @@ import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { ExperienceForm, LinkForm } from "../../components/form"
-import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, getLocalStorageData, User } from "../../hooks/storeUsersData"
+import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, createExperience, getLocalStorageData, User } from "../../hooks/storeUsersData"
 
 type gitApiInfo = {
   imgUrl: string;
@@ -26,7 +26,10 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false)
 
   const [linkFormState, setLinkFormState] = useState<boolean>(false)
+  const [cardFormState, setCardFormState] = useState<boolean>(false)
   const [socialLink, setSocialLink] = useState<string>('')
+  const [cardIndex, setCardIndex] = useState<number>()
+  const [formInfo,setFormInfo] = useState<User['experiences'] | null>()
 
   const [gitApiInfo, setGitApiInfo] = useState<gitApiInfo>(
     {
@@ -141,6 +144,17 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
       }));
     }
   }
+  const cardCallback = (data: string) => {
+    if (cardIndex === -1){
+      createExperience(user || '', data)
+    }
+
+    setUserInfo((prevState)=>({
+      ...prevState,
+      experiences: prevState.experiences ? [...prevState.experiences, JSON.parse(data)] : [JSON.parse(data)]
+    }))
+    setEditMode(true)
+  }
 
   useEffect(() => {
     if (editMode && inputTitle.current){
@@ -234,16 +248,31 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         <h2>Experiências</h2>
 
         <div className="experiencies">
-          <ExperiencesCard
-          title="Dev Junior na NASA"
-          during="Junho - 2002 - 2020"
-          technologies={["Figma", "React", "Typescript"]}
-          description="Trabalhei com figma na nasa construindo designs de foguetes usando figma pro Elon Musk"
-          editMode={editMode}
-          />
+          {userInfo.experiences?.map((experience, index) => (
+            <ExperiencesCard
+            key={index}
+            title={experience.title}
+            during={experience.during}
+            technologies={experience.technologies}
+            description={experience.descrip}
+            editMode={editMode}
+            setCardFormState={() => {
+              setFormInfo([experience])
+
+              setCardFormState(true)
+              setCardIndex(index)
+            }}
+            />
+          ))}
           
           {editMode && (
-            <NewExperienceCard/>
+            <NewExperienceCard
+            setCardFormState={() => {
+              setFormInfo(null)
+
+              setCardFormState(true)
+              setCardIndex(-1)
+            }}/>
           )}          
         </div>
       </ExperiencesContainer>
@@ -342,8 +371,8 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
         </div>
       </footer>
 
-      {linkFormState && <LinkForm action={(link: string) => {handleCallback(link)}} close={() => {setLinkFormState(false)}}/>}
-      <ExperienceForm/>
+      {linkFormState && <LinkForm action={(value: string) => {handleCallback(value)}} close={() => {setLinkFormState(false)}}/>}
+      {cardFormState && <ExperienceForm value={formInfo} close={() => {setCardFormState(false)}} action={(value: string)=>{cardCallback(value)}}/>}
     </ProfilePageContainer>
   )
 }
