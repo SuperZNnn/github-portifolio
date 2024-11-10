@@ -24,7 +24,7 @@ export const BlurContainer = styled.main`
             gap: 64px;
             flex-direction: column;
 
-            input,h3{
+            input,h3,textarea{
                 width: 739px;
                 height: 72px;
             }
@@ -35,7 +35,7 @@ export const BlurContainer = styled.main`
                 line-height: 40px;
                 color: var(--dark_green)
             }
-            input{
+            input,textarea{
                 border: 1px solid #172A3A;
                 border-radius: 1px;
                 padding: 16px 12px;
@@ -43,12 +43,16 @@ export const BlurContainer = styled.main`
                 font-weight: 600;
                 font-size: 24px;
                 line-height: 40px;
-                color: var(--tertiary_text);
+
                 border-radius: 8px;
 
                 &:focus{
                     outline: none;
                 }
+            }
+            textarea{
+                resize: none;
+                height: 281px;
             }
             .buttonsContainer{
                 width: 739px;
@@ -69,6 +73,11 @@ export const BlurContainer = styled.main`
                     box-sizing: border-box;
                     border-radius: 8px;
                     cursor: pointer;
+
+                    &:disabled{
+                        cursor: not-allowed;
+                        background-color: #D1D5DB!important;
+                    }
 
                     &:nth-child(1) {
                         background-color: var(--secondary_text);

@@ -4,7 +4,7 @@ import Header from "../../components/header"
 import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./style"
 import { useParams } from "react-router-dom"
 import axios from "axios"
-import { LinkForm } from "../../components/form"
+import { ExperienceForm, LinkForm } from "../../components/form"
 import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, getLocalStorageData, User } from "../../hooks/storeUsersData"
 
 type gitApiInfo = {
@@ -275,7 +275,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
 
         <div className="social">
           {userInfo.instaLink || editMode ? (
-            <a target="blank" href={userInfo.instaLink ? `https://${userInfo.instaLink}` : 'https://instagram.com'}>
+            <a target="blank" href={userInfo.instaLink ? `${userInfo.instaLink}` : 'https://instagram.com'}>
               <div className="link">
                 <img alt="Instagram" src="/assets/socialIcons/insta_color.png"></img>
                 <img alt="Instagram" src="/assets/socialIcons/insta_black.png"></img>
@@ -289,7 +289,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
             </a>
           ): undefined}
           {userInfo.faceLink || editMode ? (
-            <a target="blank" href={userInfo.faceLink ? `https://${userInfo.faceLink}` : 'https://facebook.com'}>
+            <a target="blank" href={userInfo.faceLink ? `${userInfo.faceLink}` : 'https://facebook.com'}>
               <div className="link">
                 <img alt="Facebook" src="/assets/socialIcons/face_color.png"></img>
                 <img alt="Facebook" src="/assets/socialIcons/face_black.png"></img>
@@ -303,7 +303,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
             </a>
           ): undefined}
           {userInfo.xLink || editMode ? (
-            <a target="blank" href={userInfo.xLink ? `https://${userInfo.xLink}` : 'https://x.com'}>
+            <a target="blank" href={userInfo.xLink ? `${userInfo.xLink}` : 'https://x.com'}>
               <div className="link">
                 <img alt="X" src="/assets/socialIcons/x_color.png"></img>
                 <img alt="X" src="/assets/socialIcons/x_black.png"></img>
@@ -317,7 +317,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
             </a>
           ): undefined}
           {userInfo.youLink || editMode ? (
-            <a target="blank" href={userInfo.youLink ? `https://${userInfo.youLink}` : 'https://youtube.com'}>
+            <a target="blank" href={userInfo.youLink ? `${userInfo.youLink}` : 'https://youtube.com'}>
               <div className="link">
                 <img alt="Youtube" src="/assets/socialIcons/you_color.png"></img>
                 <img alt="Youtube" src="/assets/socialIcons/you_black.png"></img>
@@ -343,6 +343,7 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
       </footer>
 
       {linkFormState && <LinkForm action={(link: string) => {handleCallback(link)}} close={() => {setLinkFormState(false)}}/>}
+      <ExperienceForm/>
     </ProfilePageContainer>
   )
 }
