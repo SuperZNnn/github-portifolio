@@ -1,15 +1,39 @@
-import { CardContainer } from "./style"
+import { CardContainer, OptionsCardContainer } from "./style"
 
 type Props = {
     title: string,
     during: string,
     technologies: string[],
     description: string,
-    repoLink?: string
+    repoLink?: string,
+    editMode: boolean
 }
 
-const ExperiencesCard = ({title, during, technologies, description, repoLink}: Props) => {
+export const NewExperienceCard = () => {
+    return (
+        <CardContainer style={{cursor: 'pointer'}}>
+            <div className="middle">
+                <img src="/assets/images/plus.png" alt="Mais"/>
+                <h3>Adicionar Card</h3>
+            </div>
+        </CardContainer>
+    )
+}
 
+const OptionsCard = () => {
+    return (
+        <OptionsCardContainer>
+            <div className="option">
+                <img src="/assets/images/edit.png" alt="Editar"/>
+            </div>
+            <div className="option">
+                <img src="/assets/images/trash.png" alt="Deletar"/>
+            </div>
+        </OptionsCardContainer>
+    )
+}
+
+const ExperiencesCard = ({title, during, technologies, description, repoLink, editMode}: Props) => {
     return (
         <CardContainer>
             <div className="content">
@@ -25,6 +49,10 @@ const ExperiencesCard = ({title, during, technologies, description, repoLink}: P
                 <p className="descrip">{description}</p>
             </div>
             
+            {editMode && (
+                <OptionsCard/>
+            )}
+
             {repoLink && (
                 <a href={repoLink}><button>Ver repositório</button></a>
             )}

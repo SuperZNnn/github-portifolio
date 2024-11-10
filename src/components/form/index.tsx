@@ -19,13 +19,12 @@ export const LinkForm = ({close, action}: Props) => {
     return(
         <BlurContainer>
             <div className="content">
-                
-
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <h3>Adicionar Link</h3>
                     <input
+                        type="text"
                         placeholder="Digite a URL"
-                        {...register("link", { required: true })}
+                        {...register("link")}
                     />
 
                     <div className="buttonsContainer">

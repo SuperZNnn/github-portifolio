@@ -73,7 +73,7 @@ export const ProfilePageContainer = styled.main`
                 span, input{
                     margin-left: 5px;
                     color: var(--primary_color);
-                    font-size: 60px
+                    font-size: 64px
                 }
                 input{
                     width: 80%;
