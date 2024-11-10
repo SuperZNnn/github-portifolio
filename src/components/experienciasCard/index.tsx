@@ -1,23 +1,64 @@
-import { CardContainer } from "./style"
+import { CardContainer, OptionsCardContainer } from "./style"
 
-const ExperiencesCard = () => {
+type Props = {
+    title: string,
+    during: string,
+    technologies: string[],
+    description: string,
+    link?: string,
+    editMode: boolean,
+    setCardFormState: () => void,
+    del: () => void
+}
 
+export const NewExperienceCard = ({setCardFormState}: {setCardFormState: ()=>void}) => {
+    return (
+        <CardContainer style={{cursor: 'pointer'}} onClick={setCardFormState}>
+            <div className="middle">
+                <img src="/assets/images/plus.png" alt="Mais"/>
+                <h3>Adicionar Card</h3>
+            </div>
+        </CardContainer>
+    )
+}
+
+const OptionsCard = ({setState, del}: {setState: () => void, del: ()=>void}) => {
+    return (
+        <OptionsCardContainer>
+            <div className="option" onClick={setState}>
+                <img src="/assets/images/edit.png" alt="Editar"/>
+            </div>
+            <div className="option" onClick={del}>
+                <img src="/assets/images/trash.png" alt="Deletar"/>
+            </div>
+        </OptionsCardContainer>
+    )
+}
+
+const ExperiencesCard = ({title, during, technologies, description, link, editMode, setCardFormState, del}: Props) => {
+    
     return (
         <CardContainer>
             <div className="content">
-                <h3>Dev Junior da NASA</h3>
-                <p className="during">Junho - 2002 - 2020</p>
+                <h3>{title}</h3>
+                <p className="during">{during}</p>
 
                 <div className="technologies">
-                    <p>Figma</p>
-                    <p>React</p>
-                    <p>Typescript</p>
+                    {technologies.map((tech, index) => (
+                        <p key={index}>{tech}</p>
+                    ))}
                 </div>
 
-                <p className="descrip">Um projetão fellas da minha cidade que é muito fellas, um projeto tão fellas que não deixa de ser fellas, um projetinho fellas feito pra ser fellas, agora continuarei escrevendo pra ocupar espaço e ocupar mais espaço e ocupar mais espaço</p>
+                <p className="descrip">{description}</p>
             </div>
             
-            <button>Ver repositório</button>
+            {editMode && (
+                <OptionsCard setState={() => setCardFormState()} del={() => del()}/>
+            )}
+
+            {link && (
+                <a href={link}><button>Ver repositório</button></a>
+            )}
         </CardContainer>
     )
 }

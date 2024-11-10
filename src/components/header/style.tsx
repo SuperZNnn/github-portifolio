@@ -10,7 +10,7 @@ export const HeaderComponent = styled.header`
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 99;
+    z-index: 98;
 
     .header_links{
         width: 775px;

@@ -13,6 +13,15 @@ export const CardContainer = styled.section`
     flex-direction: column;
     gap: 16px;
 
+    .middle{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 503px;
+        gap: 16px;
+    }
+
     .content{
         display: flex;
         flex-direction: column;
@@ -94,9 +103,48 @@ export const CardContainer = styled.section`
         color: var(--secondary_text);
         text-align: center;
 
+        transform: translate(-6px);
+
         transition: 0.2s;
         &:hover{
             background-color: var(--primary_color);
+        }
+    }
+`
+
+export const OptionsCardContainer = styled.div`
+    z-index: 99;
+    position: absolute;
+    width: 406px;
+    transform: translate(-32px);
+    overflow: hidden;
+    border-radius: 20px;
+    opacity: 0;
+    transition: .2s;
+    transform: translate(-32px,-34px);
+    &:hover{
+        opacity: 1;
+    }
+
+    .option{
+        height: 251.5px;
+        transition: .2s;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:nth-child(1){
+            background-color: rgba(9, 64, 77, 0.812);
+            &:hover{
+                background-color: rgba(9, 64, 77, 1);
+            }
+        }
+        &:nth-child(2){
+            background-color: rgba(52, 8, 8, 0.659);
+            &:hover{
+                background-color: rgba(52, 8, 8, 1);
+            }
         }
     }
 `
