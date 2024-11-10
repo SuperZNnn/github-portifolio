@@ -5,7 +5,7 @@ import { ContactContainer, ExperiencesContainer, ProfilePageContainer } from "./
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { ExperienceForm, LinkForm } from "../../components/form"
-import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, createExperience, getLocalStorageData, User } from "../../hooks/storeUsersData"
+import { changeDisplayName, changeExtraEmail, changeFacebookLink, changeHistory, changeInstagramLink, changeLinkedinLink, changeXLink, changeYoutubeLink, createExperience, editExperience, getLocalStorageData, User } from "../../hooks/storeUsersData"
 
 type gitApiInfo = {
   imgUrl: string;
@@ -147,12 +147,27 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
   const cardCallback = (data: string) => {
     if (cardIndex === -1){
       createExperience(user || '', data)
-    }
 
-    setUserInfo((prevState)=>({
-      ...prevState,
-      experiences: prevState.experiences ? [...prevState.experiences, JSON.parse(data)] : [JSON.parse(data)]
-    }))
+      setUserInfo((prevState)=>({
+        ...prevState,
+        experiences: prevState.experiences ? [...prevState.experiences, JSON.parse(data)] : [JSON.parse(data)]
+      }))
+    }
+  
+    if (cardIndex && cardIndex > 0){
+      setUserInfo((prevState) => {
+        const experiencesArray = prevState.experiences ?? [];
+    
+        const updatedExperiences = [...experiencesArray];
+        updatedExperiences[cardIndex - 1] = JSON.parse(data);
+    
+        return {
+          ...prevState,
+          experiences: updatedExperiences,
+        };
+      })
+      editExperience(user || '', data, cardIndex - 1)
+    }
     setEditMode(true)
   }
 
@@ -256,14 +271,31 @@ const ProfilePage = ({userLogged, updateUser}: Props) => {
             technologies={experience.technologies}
             description={experience.descrip}
             editMode={editMode}
+            link={experience.link}
             setCardFormState={() => {
               setFormInfo([experience])
 
+              setCardIndex(index + 1)
               setCardFormState(true)
-              setCardIndex(index)
+            }}
+            del={() => {
+              const { usersArray, userIndex } = getLocalStorageData(user || '');
+
+              if (userIndex > -1){
+                usersArray[userIndex].experiences?.splice(index, 1)
+                setUserInfo((prevState)=>({
+                  ...prevState,
+                  experiences: usersArray[userIndex].experiences
+                }))
+                localStorage.setItem('users', JSON.stringify(usersArray))
+                setEditMode(true)
+              }
             }}
             />
           ))}
+          {!(userInfo.experiences && userInfo.experiences.length > 0) && !editMode && (
+            <p className="nothing_here">Não há nada por aqui!</p>
+          )}
           
           {editMode && (
             <NewExperienceCard

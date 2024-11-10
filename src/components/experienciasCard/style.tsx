@@ -113,14 +113,15 @@ export const CardContainer = styled.section`
 `
 
 export const OptionsCardContainer = styled.div`
+    z-index: 99;
     position: absolute;
-    top: 0;
     width: 406px;
     transform: translate(-32px);
     overflow: hidden;
     border-radius: 20px;
     opacity: 0;
     transition: .2s;
+    transform: translate(-32px,-34px);
     &:hover{
         opacity: 1;
     }

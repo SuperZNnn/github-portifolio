@@ -14,7 +14,7 @@ export type User = {
             during: string,
             technologies: string[],
             descrip: string,
-            repoLink?: string
+            link?: string
         }
     ] | null
 }
@@ -84,5 +84,16 @@ export const createExperience = (user: string, experience: string) => {
         ];
     }
     
+    localStorage.setItem('users', JSON.stringify(usersArray));
+};
+export const editExperience = (user: string, experience: string, index: number) => {
+    const { usersArray, userIndex } = getLocalStorageData(user);
+
+    if (userIndex > -1){
+        const newExperience = JSON.parse(experience)
+
+        usersArray[userIndex].experiences[index] = newExperience;
+    }
+
     localStorage.setItem('users', JSON.stringify(usersArray));
 };

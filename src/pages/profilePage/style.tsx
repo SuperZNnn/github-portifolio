@@ -14,6 +14,18 @@ export const ProfilePageContainer = styled.main`
         transform: translateX(500px);
     }
 
+    p.nothing_here{
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 40px;
+        color: var(--tertiary_text);
+        text-align: center;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%)
+    }
+
     .profile_info{
         display: flex;
         justify-content: space-between;

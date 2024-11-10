@@ -5,9 +5,10 @@ type Props = {
     during: string,
     technologies: string[],
     description: string,
-    repoLink?: string,
+    link?: string,
     editMode: boolean,
-    setCardFormState: () => void
+    setCardFormState: () => void,
+    del: () => void
 }
 
 export const NewExperienceCard = ({setCardFormState}: {setCardFormState: ()=>void}) => {
@@ -21,20 +22,21 @@ export const NewExperienceCard = ({setCardFormState}: {setCardFormState: ()=>voi
     )
 }
 
-const OptionsCard = ({setState}: {setState: () => void}) => {
+const OptionsCard = ({setState, del}: {setState: () => void, del: ()=>void}) => {
     return (
         <OptionsCardContainer>
             <div className="option" onClick={setState}>
                 <img src="/assets/images/edit.png" alt="Editar"/>
             </div>
-            <div className="option">
+            <div className="option" onClick={del}>
                 <img src="/assets/images/trash.png" alt="Deletar"/>
             </div>
         </OptionsCardContainer>
     )
 }
 
-const ExperiencesCard = ({title, during, technologies, description, repoLink, editMode, setCardFormState}: Props) => {
+const ExperiencesCard = ({title, during, technologies, description, link, editMode, setCardFormState, del}: Props) => {
+    
     return (
         <CardContainer>
             <div className="content">
@@ -51,11 +53,11 @@ const ExperiencesCard = ({title, during, technologies, description, repoLink, ed
             </div>
             
             {editMode && (
-                <OptionsCard setState={() => setCardFormState()}/>
+                <OptionsCard setState={() => setCardFormState()} del={() => del()}/>
             )}
 
-            {repoLink && (
-                <a href={repoLink}><button>Ver repositório</button></a>
+            {link && (
+                <a href={link}><button>Ver repositório</button></a>
             )}
         </CardContainer>
     )
