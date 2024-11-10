@@ -2,6 +2,7 @@ import { HomePageContainer } from "./style"
 import { signIn } from "../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import { setSession } from "../../hooks/useSession";
+import SearchRecomendations from "../../components/searchRecomendations";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ const HomePage = () => {
 
             <div className="input_group">
                 <input type="text" name="user" id="user" placeholder="Digite o nome do usuário"/>
+                <SearchRecomendations/>
 
                 <button>
                     <img src="/assets/images/arrow_right.png" alt="Avançar"/>
