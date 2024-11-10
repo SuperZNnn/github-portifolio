@@ -25,6 +25,11 @@ export const getLocalStorageData = (user: string) => {
     return { usersArray, userIndex };
 }
 
+export const getAllUsers = () => {
+    const usersArray = JSON.parse(localStorage.getItem('users') || '[]');
+    return usersArray;
+}
+
 type UserUpdateField = 'linkedinLink' | 'instaLink' | 'youLink' | 'xLink' | 'faceLink' | 'displayName' | 'history' | 'extraEmail';
 
 const updateUserField = (user: string, field: UserUpdateField, value: string) => {

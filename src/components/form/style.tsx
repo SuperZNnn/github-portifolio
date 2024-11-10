@@ -73,6 +73,7 @@ export const BlurContainer = styled.main`
                     box-sizing: border-box;
                     border-radius: 8px;
                     cursor: pointer;
+                    transition: .2s;
 
                     &:disabled{
                         cursor: not-allowed;
@@ -83,10 +84,19 @@ export const BlurContainer = styled.main`
                         background-color: var(--secondary_text);
                         border: 1px solid var(--dark_green);
                         color: var(--dark_green);
+                        &:hover{
+                            background-color: var(--red);
+                            color: var(--secondary_text);
+                        }
                     }
                     &:nth-child(2) {
                         background-color: var(--dark_green);
                         color: var(--secondary_text);
+                        &:hover{
+                            background-color: var(--primary_color);
+                            color: var(--secondary_text);
+                            border-color: transparent
+                        }
                     }
                 }
             }

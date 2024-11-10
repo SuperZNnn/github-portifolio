@@ -21,6 +21,22 @@ export const HomePageContainer = styled.main`
         justify-content: space-between;
         align-items: center;
         width: 788px;
+        flex-wrap: wrap;
+        
+        p.warning{
+            display: flex;
+            align-items: center;
+            height: 40px;
+            gap: 8px;
+
+            span{
+                color: var(--red);
+                font-family: "Roboto", sans-serif;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 40px;
+            }
+        }
 
         button{
             width: 83px;
