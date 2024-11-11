@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { BlurContainer } from "./style"
 import { useForm } from "react-hook-form"
 
@@ -82,8 +82,7 @@ export const ExperienceForm = ({close, action, value}: Props) => {
         }, 200);
     };
 
-    // Observar os valores dos campos para garantir que o formulário atualize corretamente
-    const watchAllFields = watch();
+    watch();
 
     return (
         <BlurContainer>
