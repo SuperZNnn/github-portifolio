@@ -1,3 +1,6 @@
+### Aviso
+A pasta 'DIST' está contida no repositório devido a necessidade de fazer o deploy para uma instância EC2 que não possuia memória suficiente para fazer o build por si só.
+
 # Portifólio Git
 
 ### Página Inicial
